@@ -1,0 +1,59 @@
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
+# Create the form ("the box")
+$form = New-Object System.Windows.Forms.Form
+$form.Text = "The Box"
+$form.Size = New-Object System.Drawing.Size(600, 400)
+$form.StartPosition = "CenterScreen"
+
+# Search input box
+$searchBox = New-Object System.Windows.Forms.TextBox
+$searchBox.Location = New-Object System.Drawing.Point(10, 20)
+$searchBox.Size = New-Object System.Drawing.Size(300, 20)
+
+# Search button
+$searchButton = New-Object System.Windows.Forms.Button
+$searchButton.Text = "Search"
+$searchButton.Location = New-Object System.Drawing.Point(320, 18)
+$searchButton.Size = New-Object System.Drawing.Size(75, 23)
+
+# Radio button - PAS 1.0
+$radio1 = New-Object System.Windows.Forms.RadioButton
+$radio1.Text = "PAS 1.0"
+$radio1.Location = New-Object System.Drawing.Point(410, 20)
+$radio1.AutoSize = $true
+$radio1.Checked = $true
+
+# Radio button - PAS 2.0
+$radio2 = New-Object System.Windows.Forms.RadioButton
+$radio2.Text = "PAS 2.0"
+$radio2.Location = New-Object System.Drawing.Point(480, 20)
+$radio2.AutoSize = $true
+
+# Results text box (multiline)
+$resultsBox = New-Object System.Windows.Forms.TextBox
+$resultsBox.Location = New-Object System.Drawing.Point(10, 60)
+$resultsBox.Size = New-Object System.Drawing.Size(560, 280)
+$resultsBox.Multiline = $true
+$resultsBox.ScrollBars = "Vertical"
+$resultsBox.ReadOnly = $true
+
+# Add controls to the form
+$form.Controls.Add($searchBox)
+$form.Controls.Add($searchButton)
+$form.Controls.Add($radio1)
+$form.Controls.Add($radio2)
+$form.Controls.Add($resultsBox)
+
+# Define search button click event
+$searchButton.Add_Click({
+    $query = $searchBox.Text
+    $selectedVersion = if ($radio1.Checked) { "PAS 1.0" } else { "PAS 2.0" }
+
+    # Placeholder for real search logic
+    $resultsBox.Text = "You searched for: $query`r`nUsing: $selectedVersion"
+})
+
+# Show the form
+[void]$form.ShowDialog()
